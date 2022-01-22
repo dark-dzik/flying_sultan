@@ -1,10 +1,10 @@
-package list8;
+package list_8_1_a;
 
-import list8.pack.Pack;
-import list8.paper.ArtPaper;
-import list8.paper.FlexiblePaper;
-import list8.paper.StiffPaper;
-import list8.paper.WrappingPaper;
+import list_8_1_a.pack.Pack;
+import list_8_1_a.paper.ArtPaper;
+import list_8_1_a.paper.FlexiblePaper;
+import list_8_1_a.paper.StiffPaper;
+import list_8_1_a.paper.WrappingPaper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,21 +37,30 @@ public class ElfPacker {
         this.flexiblePaperThreshold = flexiblePaperThreshold;
     }
 
-    public WrappingPaper wrapPresent(Pack packWithPresent) {
+    public Present wrapPresent(String content, Pack pack) {
+        Present present = new Present();
+        present.setContent(content);
+        present.setPack(pack);
+        present.setPaper(pickWrappingPaper(pack));
+        return present;
+    }
+
+    private WrappingPaper pickWrappingPaper(Pack packWithPresent) {
         double packSurfaceAreaWithOverlaps = calculateSurfaceAreaConsideringOverlaps(packWithPresent);
 
         if(packSurfaceAreaWithOverlaps <= artPaperThreshold) {
-            return new ArtPaper(packWithPresent);
+            return new ArtPaper();
         } else if (packSurfaceAreaWithOverlaps <= flexiblePaperThreshold) {
-            return new FlexiblePaper(packWithPresent);
+            return new FlexiblePaper();
         } else {
-            return new StiffPaper(packWithPresent);
+            return new StiffPaper();
         }
     }
 
     private static double calculateSurfaceAreaConsideringOverlaps(Pack packWithPresent) {
         double packSurfaceArea = packWithPresent.calculateSurfaceArea();
-        log.info("Pack type: {}, pack surface area: {}", packWithPresent.getClass(), packSurfaceArea);
-        return packSurfaceArea + OVERLAPS_PERCENTAGE * packSurfaceArea;
+        double packSurfaceAreaWithOverlaps = packSurfaceArea + OVERLAPS_PERCENTAGE * packSurfaceArea;
+        log.info("Pack type: {}, pack surface area with overlaps: {}", packWithPresent.getClass(), packSurfaceArea);
+        return packSurfaceAreaWithOverlaps;
     }
 }

@@ -1,11 +1,10 @@
-package list8.pack;
+package list_8_1_a.pack;
 
 public class SphericalPack extends Pack {
 
     private double radius;
 
-    public SphericalPack(String content, double radius) {
-        this.content = content;
+    public SphericalPack(double radius) {
         this.radius = radius;
     }
 
@@ -24,9 +23,8 @@ public class SphericalPack extends Pack {
 
     @Override
     public String toString() {
-        return "SphericalPack{" +
-                "content='" + content + '\'' +
-                ", radius=" + radius +
-                '}';
+        return "Spherical {" +
+                "radius=" + radius +
+                "} " + super.toString();
     }
 }

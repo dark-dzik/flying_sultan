@@ -1,4 +1,4 @@
-package list8.pack;
+package list_8_1_a.pack;
 
 public class CylindricalPack extends Pack {
 
@@ -6,8 +6,7 @@ public class CylindricalPack extends Pack {
 
     private double height;
 
-    public CylindricalPack(String content, double radius, double height) {
-        this.content = content;
+    public CylindricalPack(double radius, double height) {
         this.radius = radius;
         this.height = height;
     }
@@ -35,10 +34,9 @@ public class CylindricalPack extends Pack {
 
     @Override
     public String toString() {
-        return "CylindricalPack{" +
+        return "Cylindrical {" +
                 "radius=" + radius +
                 ", height=" + height +
-                ", content='" + content + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

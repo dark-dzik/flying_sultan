@@ -1,4 +1,4 @@
-package list8.pack;
+package list_8_1_a.pack;
 
 public class CuboidPack extends Pack {
 
@@ -8,8 +8,7 @@ public class CuboidPack extends Pack {
 
     private double height;
 
-    public CuboidPack(String content, double width, double length, double height) {
-        this.content = content;
+    public CuboidPack(double width, double length, double height) {
         this.width = width;
         this.length = length;
         this.height = height;
@@ -46,11 +45,10 @@ public class CuboidPack extends Pack {
 
     @Override
     public String toString() {
-        return "CuboidPack{" +
+        return "Cuboid {" +
                 "width=" + width +
                 ", length=" + length +
                 ", height=" + height +
-                ", content='" + content + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
