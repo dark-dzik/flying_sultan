@@ -5,7 +5,7 @@ import list8.pack.Pack;
 public class ArtPaper extends WrappingPaper {
 
     public ArtPaper(Pack packToWrap) {
-        this.wrappedPack = packToWrap;
+        super(packToWrap);
     }
 
     @Override

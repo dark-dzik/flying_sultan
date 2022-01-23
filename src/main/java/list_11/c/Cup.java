@@ -1,32 +1,9 @@
 package list_11.c;
 
-import lombok.extern.slf4j.Slf4j;
+public class Cup extends WaterContainer {
 
-@Slf4j
-public class Cup {
-
-    private final int maximumCapacity;
-
-    private int currentDrinkAmount;
-
-    public Cup(int maximumCapacity, int currentDrinkAmount) {
-        this.maximumCapacity = maximumCapacity;
-        this.currentDrinkAmount = currentDrinkAmount;
+    public Cup(int maximumCapacity, int currentWaterAmount) {
+        super(maximumCapacity, currentWaterAmount);
     }
 
-    public int getMaximumCapacity() {
-        return maximumCapacity;
-    }
-
-    public int getCurrentDrinkAmount() {
-        return currentDrinkAmount;
-    }
-
-    public void setCurrentDrinkAmount(int currentDrinkAmount) {
-        this.currentDrinkAmount = currentDrinkAmount;
-    }
-
-    public void fill() {
-        currentDrinkAmount = maximumCapacity;
-    }
 }

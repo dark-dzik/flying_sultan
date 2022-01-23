@@ -14,12 +14,14 @@ public abstract class WrappingPaper {
         this.wrappedPack = wrappedPack;
     }
 
+    protected WrappingPaper(Pack wrappedPack) {
+        this.wrappedPack = wrappedPack;
+    }
+
     public WrappingPaper wrapPack(Pack packToWrap) {
         this.wrappedPack = packToWrap;
         return this;
     }
-
-
 
     @Override
     public String toString() {

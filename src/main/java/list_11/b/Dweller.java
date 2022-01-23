@@ -29,9 +29,9 @@ public class Dweller extends Thread {
     }
 
     private void drink() {
-        int availableAmount = cup.getCurrentDrinkAmount();
+        int availableAmount = cup.getCurrentWaterAmount();
         int drankAmount = new RandomDataGenerator().nextInt(1, availableAmount);
-        cup.setCurrentDrinkAmount(availableAmount - drankAmount);
+        cup.setCurrentWaterAmount(availableAmount - drankAmount);
         log.info("{} takes a sip, drank amount: {}", this.getName(), drankAmount);
     }
 
@@ -44,7 +44,7 @@ public class Dweller extends Thread {
     }
 
     private boolean canDrinkFromCup() {
-        return cup.getCurrentDrinkAmount() > 0;
+        return cup.getCurrentWaterAmount() > 0;
     }
 
     private void fillAndBoilKettle() throws InterruptedException {
@@ -56,7 +56,7 @@ public class Dweller extends Thread {
         int availableAmountInKettle = kettle.getCurrentWaterAmount();
         log.info("{} wants to fill cup, available amount in kettle: {}", this.getName(), availableAmountInKettle);
         if(availableAmountInKettle < cup.getMaximumCapacity()) {
-            cup.setCurrentDrinkAmount(availableAmountInKettle);
+            cup.setCurrentWaterAmount(availableAmountInKettle);
             kettle.setCurrentWaterAmount(0);
         } else {
             cup.fill();
@@ -80,15 +80,18 @@ public class Dweller extends Thread {
                     drink();
                     continue;
                 }
+
                 log.info("{} cannot drink.", this.getName());
                 if(canPourFromKettle()) {
                     fillCup();
                     refillsAmount--;
                     continue;
                 }
+
                 log.info("{} cannot pour from kettle.", this.getName());
                 if(canFillKettle() && semaphore.tryAcquire()) {
                     fillAndBoilKettle();
+                    fillCup();
                     semaphore.release();
                     continue;
                 }

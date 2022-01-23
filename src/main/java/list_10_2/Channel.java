@@ -11,7 +11,7 @@ import java.util.Queue;
 @Slf4j
 public class Channel <T> {
 
-    private Queue<? super T> messagesQueue;
+    private Queue<T> messagesQueue;
 
     public Channel() {
         messagesQueue = new LinkedList<>();

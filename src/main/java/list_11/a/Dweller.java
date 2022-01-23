@@ -24,14 +24,14 @@ public class Dweller extends Thread {
     }
 
     private void drink() {
-        int availableAmount = cup.getCurrentDrinkAmount();
+        int availableAmount = cup.getCurrentWaterAmount();
         int drankAmount = new RandomDataGenerator().nextInt(1, availableAmount);
-        cup.setCurrentDrinkAmount(availableAmount - drankAmount);
+        cup.setCurrentWaterAmount(availableAmount - drankAmount);
         log.info("{} takes a sip, drank amount: {}", this.getName(), drankAmount);
     }
 
     private boolean canFillKettle() {
-        return kettle.getCurrentWaterAmount() == 0;
+        return !kettle.isBoilingWater() && kettle.getCurrentWaterAmount() == 0;
     }
 
     private boolean canPourFromKettle() {
@@ -39,7 +39,7 @@ public class Dweller extends Thread {
     }
 
     private boolean canDrinkFromCup() {
-        return cup.getCurrentDrinkAmount() > 0;
+        return cup.getCurrentWaterAmount() > 0;
     }
 
     private void fillKettle() {
@@ -56,7 +56,7 @@ public class Dweller extends Thread {
         int availableAmountInKettle = kettle.getCurrentWaterAmount();
         log.info("{} wants to fill cup, available amount in kettle: {}", this.getName(), availableAmountInKettle);
         if(availableAmountInKettle < cup.getMaximumCapacity()) {
-            cup.setCurrentDrinkAmount(availableAmountInKettle);
+            cup.setCurrentWaterAmount(availableAmountInKettle);
             kettle.setCurrentWaterAmount(0);
         } else {
             cup.fill();
@@ -98,6 +98,6 @@ public class Dweller extends Thread {
                 e.printStackTrace();
             }
         }
-        log.info("{} drank last refil.", this.getName());
+        log.info("{} drank last refill.", this.getName());
     }
 }

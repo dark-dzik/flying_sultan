@@ -1,7 +1,5 @@
 package list_8_1_b;
 
-import list_8_1_b.paper.WrappingPaper;
-
 import java.util.Arrays;
 
 public class Present {

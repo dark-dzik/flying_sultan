@@ -2,32 +2,15 @@ package list_11.a;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.Semaphore;
-
 @Slf4j
-public class Kettle {
-
-    private static final long WATER_POURING_TIME = 2000;
+public class Kettle extends WaterContainer {
 
     private static final long WATER_BOILING_TIME = 10000;
-
-    private final int maximumCapacity;
-
-    private int currentWaterAmount;
 
     private boolean boilingWater;
 
     public Kettle(int maximumCapacity, int currentWaterAmount) {
-        this.maximumCapacity = maximumCapacity;
-        this.currentWaterAmount = currentWaterAmount;
-    }
-
-    public int getCurrentWaterAmount() {
-        return currentWaterAmount;
-    }
-
-    public void setCurrentWaterAmount(int currentWaterAmount) {
-        this.currentWaterAmount = currentWaterAmount;
+        super(maximumCapacity, currentWaterAmount);
     }
 
     public boolean isBoilingWater() {
@@ -41,11 +24,5 @@ public class Kettle {
         boilingWater = false;
         log.info("Kettle has boiled the water.");
     }
-
-    public void fill() {
-        currentWaterAmount = maximumCapacity;
-    }
-
-
 
 }

@@ -3,8 +3,6 @@ package list_11.c;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import java.util.concurrent.Semaphore;
-
 @Slf4j
 public class Dweller extends Thread {
 
@@ -16,27 +14,20 @@ public class Dweller extends Thread {
 
     private final Cup cup;
 
-    private Semaphore semaphore;
-
     private int refillsAmount;
 
-    public Dweller(String dwellerName, Kettle kettle, Cup cup, int refillsAmount, Semaphore semaphore) {
+    public Dweller(String dwellerName, Kettle kettle, Cup cup, int refillsAmount) {
         super(dwellerName);
         this.kettle = kettle;
         this.cup = cup;
         this.refillsAmount = refillsAmount;
-        this.semaphore = semaphore;
     }
 
     private void drink() {
-        int availableAmount = cup.getCurrentDrinkAmount();
+        int availableAmount = cup.getCurrentWaterAmount();
         int drankAmount = new RandomDataGenerator().nextInt(1, availableAmount);
-        cup.setCurrentDrinkAmount(availableAmount - drankAmount);
+        cup.setCurrentWaterAmount(availableAmount - drankAmount);
         log.info("{} takes a sip, drank amount: {}", this.getName(), drankAmount);
-    }
-
-    private boolean canFillKettle() {
-        return kettle.getCurrentWaterAmount() == 0;
     }
 
     private boolean canPourFromKettle() {
@@ -44,7 +35,7 @@ public class Dweller extends Thread {
     }
 
     private boolean canDrinkFromCup() {
-        return cup.getCurrentDrinkAmount() > 0;
+        return cup.getCurrentWaterAmount() > 0;
     }
 
     private void fillAndBoilKettle() throws InterruptedException {
@@ -56,7 +47,7 @@ public class Dweller extends Thread {
         int availableAmountInKettle = kettle.getCurrentWaterAmount();
         log.info("{} wants to fill cup, available amount in kettle: {}", this.getName(), availableAmountInKettle);
         if(availableAmountInKettle < cup.getMaximumCapacity()) {
-            cup.setCurrentDrinkAmount(availableAmountInKettle);
+            cup.setCurrentWaterAmount(availableAmountInKettle);
             kettle.setCurrentWaterAmount(0);
         } else {
             cup.fill();
@@ -80,15 +71,16 @@ public class Dweller extends Thread {
                     drink();
                     continue;
                 }
+
                 log.info("{} cannot drink.", this.getName());
                 if(canPourFromKettle()) {
                     fillCup();
                     refillsAmount--;
                     continue;
                 }
-                log.info("{} cannot pour from kettle.", this.getName());
 
-                    fillAndBoilKettle();
+                log.info("{} cannot pour from kettle.", this.getName());
+                fillAndBoilKettle();
 
 
 

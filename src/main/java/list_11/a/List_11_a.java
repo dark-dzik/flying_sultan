@@ -12,5 +12,6 @@ public class List_11_a {
         Dweller borys = new Dweller("Borys", kettle, new Cup(100, 100), 3);
 
         List.of(stefan, roman, borys).forEach(Dweller::start);
+
     }
 }
